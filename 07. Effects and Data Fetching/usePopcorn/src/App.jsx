@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const KEY = "7b10b00f";
-const tempMovieData = [
+/* const tempMovieData = [
     {
         imdbID: "tt1375666",
         Title: "Inception",
@@ -41,7 +41,7 @@ const tempWatchedData = [
         imdbRating: 8.5,
         userRating: 9,
     },
-];
+]; */
 
 const average = (arr) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -201,13 +201,20 @@ function Main({ children }) {
 
 // ANCHOR APP
 export default function App() {
-    const [movies, setMovies] = useState(tempMovieData);
-    const [watched, setWatched] = useState(tempWatchedData);
+    const [movies, setMovies] = useState([]);
+    const [watched, setWatched] = useState([]);
+    const query = "hulk";
 
     useEffect(function () {
-        fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=hulk`)
-            .then((response) => response.json())
-            .then((data) => setMovies(data.Search));
+        async function fetchMovies() {
+            const response = await fetch(
+                `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            );
+            const data = await response.json();
+            setMovies(data.Search);
+            console.log(data.Search);
+        }
+        fetchMovies();
     }, []);
 
     return (
