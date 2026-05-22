@@ -199,20 +199,28 @@ function Main({ children }) {
     return <main className="main">{children}</main>;
 }
 
+// ANCHOR LOADER
+
+function Loader() {
+    return <p className="loader">Loading</p>;
+}
+
 // ANCHOR APP
 export default function App() {
     const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const query = "hulk";
 
     useEffect(function () {
         async function fetchMovies() {
+            setIsLoading(true);
             const response = await fetch(
                 `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
             );
             const data = await response.json();
             setMovies(data.Search);
-            console.log(data.Search);
+            setIsLoading(false);
         }
         fetchMovies();
     }, []);
@@ -235,7 +243,7 @@ export default function App() {
                     }
                 /> */}
                 <Box movies={movies}>
-                    <MovieList movies={movies} />
+                    {isLoading ? <Loader /> : <MovieList movies={movies} />}
                 </Box>
 
                 <Box movies={movies}>
