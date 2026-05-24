@@ -53,7 +53,7 @@ function Star({ onClick, full, onHoverIn, onHoverOut, color, size }) {
     );
 }
 
-function StartRating({
+function StarRating({
     maxRating = 5,
     color = "#fcc419",
     size = 48,
@@ -99,4 +99,4 @@ function StartRating({
     );
 }
 
-export default StartRating;
+export default StarRating;
